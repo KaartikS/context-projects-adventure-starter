@@ -1,3 +1,7 @@
+const { Food } = require("./food");
+const { Item } = require("./item");
+const { Room } = require("./room");
+
 class Player {
 
     constructor(name, startingRoom) {
@@ -25,7 +29,7 @@ class Player {
             console.log(`${this.name} is not carrying anything.`);
         } else {
             console.log(`${this.name} is carrying:`);
-            for (let i = 0 ; i < this.items.length ; i++) {
+            for (let i = 0; i < this.items.length; i++) {
                 console.log(`  ${this.items[i].name}`);
             }
         }
@@ -34,25 +38,60 @@ class Player {
     takeItem(itemName) {
 
         // Fill this in
-
+        if (this.currentRoom instanceof Room) {
+            let currentRoomItems = this.currentRoom.items;
+            for (let i = 0; i < currentRoomItems.length; i++) {
+                let currentItem = currentRoomItems[i];
+                if (currentItem instanceof Item) {
+                    if (currentItem.name === itemName) {
+                        this.items.push(this.currentRoom.items.pop(itemName));
+                    }
+                }
+            }
+        }
     }
 
     dropItem(itemName) {
 
         // Fill this in
+        let currentRoomItems = this.currentRoom.items;
+        for (let i = 0; i < this.items.length; i++) {
+            let currentItem = this.items[i];
+            if (currentItem instanceof Item) {
+                if (currentItem.name === itemName) {
+                    this.items.pop(currentItem);
+                    currentRoomItems.push(currentItem);
+                }
+            }
+        }
     }
 
     eatItem(itemName) {
         // Fill this in
-
+        for (let i = 0; i < this.items.length; i++) {
+            let currentItem = this.items[i];
+            if (currentItem instanceof Food) {
+                if (currentItem.name === itemName) {
+                    this.items.pop(currentItem);
+                }
+            }
+        }
     }
 
     getItemByName(name) {
 
         // Fill this in
+        for (let i = 0; i < this.items.length; i++) {
+            let currentItem = this.items[i];
+            if (currentItem instanceof Item) {
+                if (currentItem.name === name) {
+                    return this.items.pop(currentItem);
+                }
+            }
+        }
     }
 }
 
 module.exports = {
-  Player,
+    Player,
 };
