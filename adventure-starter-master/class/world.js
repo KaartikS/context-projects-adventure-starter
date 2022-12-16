@@ -45,15 +45,16 @@ class World {
 
             if (itemData.isFood) {
                 newItem = new Food(itemData.name, itemData.description);
-                return;
             } else {
                 newItem = new Item(itemData.name, itemData.description);
             }
 
+
+
             let itemRoom = this.rooms[itemData.room];
             itemRoom.items.push(newItem);
-        }
 
+        }
     }
 }
 
